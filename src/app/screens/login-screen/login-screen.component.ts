@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-screen',
@@ -7,19 +6,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-screen.component.scss']
 })
 export class LoginScreenComponent implements OnInit{
-
   public username:string = "";
   public password:string = "";
   public type: string = "password";
   public errors:any = {};
   public load:boolean = false;
 
-  constructor(
-    private router: Router
-  ){}
+  constructor(){}
 
   ngOnInit(): void {
-
+    
   }
 
   public login(){
@@ -31,6 +27,6 @@ export class LoginScreenComponent implements OnInit{
   }
 
   public registrar(){
-    this.router.navigate(["registro-usuario"]);
+
   }
 }

@@ -15,6 +15,12 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatInputModule} from '@angular/material/input';
 
+//Para usar el mask
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
+//Cambia el formato a Español
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+
 
 import { RegistroUsuariosScreenComponent } from './screens/registro-usuarios-screen/registro-usuarios-screen.component';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
@@ -45,9 +51,14 @@ import { RegistroMaestrosComponent } from './partials/registro-maestros/registro
     MatDividerModule,
     FormsModule,
     MatRadioModule,
-    MatInputModule
+    MatInputModule,
+    NgxMaskDirective
+
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+    provideNgxMask()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

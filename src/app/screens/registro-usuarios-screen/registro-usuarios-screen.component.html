@@ -1,1 +1,73 @@
-<p>registro-usuarios-screen works!</p>
+<div class="wrapper">
+    <div class="section-registro">
+      <div class="header-registro">
+        <app-navbar [tipo]="tipo"></app-navbar>
+      </div>
+      <div class="body-registro">
+        <section class="slider">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/assets/images/carousel_1.jpeg" class="d-block img-slider">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/carousel_2.jpeg" class="d-block img-slider">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/carousel_3.jpeg" class="d-block img-slider">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </section>
+        <!-- Aquí van a ir los radio buttons para elegir el rol de usuario a registrar -->
+        <section class="rol-user">
+          <div class="container">
+            <!-- Radio buttons -->
+            <div class="row mt-5" style="text-align: center;">
+              <div class="form-group col-12">
+                <label class="title-user" for="tipo_usuario">Tipo de usuario</label>
+              </div>
+              <div class="row mt-3" style="text-align: center;">
+                <div class="form-group col-12">
+                  <mat-radio-group [(ngModel)]="user.tipo_usuario" (change)="radioChange($event)" [disabled]="editar">
+                    <mat-radio-button value="administrador">Administrador</mat-radio-button>
+                    <mat-radio-button value="alumno">Alumno</mat-radio-button>
+                    <mat-radio-button value="maestro">Maestro</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <!-- Formularios de todos los usuarios -->
+              <section class="forms-registro">
+                <!-- Formulario del admin -->
+                <section class="registro-admin" *ngIf="isAdmin">
+                  <app-registro-admin [rol]="tipo_user" [datos_user]="user"></app-registro-admin>
+                </section>
+                <!-- Formulario del alumno -->
+                <section class="registro-alumnos" *ngIf="isAlumno">
+                  <app-registro-alumnos [rol]="tipo_user" [datos_user]="user"></app-registro-alumnos>
+                </section>
+                <!-- Formulario del maestro -->
+                <section class="registro-maestros" *ngIf="isMaestro">
+                  <app-registro-maestros [rol]="tipo_user" [datos_user]="user"></app-registro-maestros>
+                </section>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  

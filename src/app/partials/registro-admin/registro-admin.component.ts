@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { AdministradoresService } from 'src/app/services/administradores.service';
+import { Router } from '@angular/router';
+declare var $:any;
 
 @Component({
   selector: 'app-registro-admin',
@@ -12,6 +16,7 @@ export class RegistroAdminComponent implements OnInit{
   public admin:any = {};
   public errors:any = {};
   public editar:boolean = false;
+  public token: string = "";
 
   //Para contraseñas
   public hide_1: boolean = false;
@@ -19,10 +24,16 @@ export class RegistroAdminComponent implements OnInit{
   public inputType_1: string = 'password';
   public inputType_2: string = 'password';
 
-  constructor(){}
+  constructor(
+    private location: Location,
+    private administradoresService: AdministradoresService,
+    private router: Router
+  ){}
 
   ngOnInit(): void {
-
+    this.admin = this.administradoresService.esquemaAdmin();
+    this.admin.rol = this.rol;
+    console.log("Los datos del admin son: ", this.admin);
   }
 
   //Funciones para password
@@ -51,11 +62,43 @@ export class RegistroAdminComponent implements OnInit{
   }
 
   public regresar(){
-
+    this.location.back();
   }
 
   public registrar(){
+    //Validación del formulario
+    this.errors = [];
 
+    this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    //Validar la contraseña
+    if(this.admin.password == this.admin.confirmar_password){
+      
+      //Aquí se va a ejecutar la lógica de programación para registrar un usuario
+      this.administradoresService.registrarAdmin(this.admin).subscribe(
+        (response)=>{
+          //Aquí va la ejecución del servicio si todo es correcto
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado: ", response);
+          if(this.token != ""){
+            this.router.navigate(["home"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        }, (error)=>{
+          //Aquí se ejecuta el error
+          alert("No se pudo registrar usuario");
+        }
+      );
+
+
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.admin.password="";
+      this.admin.confirmar_password="";
+    }
   }
 
   public actualizar(){

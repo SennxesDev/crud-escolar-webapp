@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MaestrosService } from 'src/app/services/maestros.service';
+import { FacadeService } from 'src/app/services/facade.service';
+declare var $:any;
 
 @Component({
   selector: 'app-registro-maestros',
@@ -10,6 +14,7 @@ export class RegistroMaestrosComponent implements OnInit{
   @Input() rol: string = "";
   @Input() datos_user: any = {};
 
+  
   //Para contraseñas
   public hide_1: boolean = false;
   public hide_2: boolean = false;
@@ -19,6 +24,7 @@ export class RegistroMaestrosComponent implements OnInit{
   public maestro:any = {};
   public errors:any = {};
   public editar:boolean = false;
+  public token: string = "";
 
   //Para el select
   public areas: any[] = [
@@ -44,11 +50,17 @@ export class RegistroMaestrosComponent implements OnInit{
 
 
   constructor(
+    private maestrosService: MaestrosService,
+    private router: Router,
     private location : Location,
+    public activatedRoute: ActivatedRoute,
+    private facadeService: FacadeService
   ){}
 
   ngOnInit(): void {
-
+    this.maestro = this.maestrosService.esquemaMaestro();
+    this.maestro.rol = this.rol;
+    console.log("Los datos del admin son: ", this.maestro);
   }
 
   public regresar(){
@@ -56,7 +68,39 @@ export class RegistroMaestrosComponent implements OnInit{
   }
 
   public registrar(){
+    //Validación del formulario
+    this.errors = [];
 
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    //Validar la contraseña
+    if(this.maestro.password == this.maestro.confirmar_password){
+      
+      //Aquí se va a ejecutar la lógica de programación para registrar un usuario
+      this.maestrosService.registrarMaestro(this.maestro).subscribe(
+        (response)=>{
+          //Aquí va la ejecución del servicio si todo es correcto
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado: ", response);
+          if(this.token != ""){
+            this.router.navigate(["home"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        }, (error)=>{
+          //Aquí se ejecuta el error
+          alert("No se pudo registrar usuario");
+        }
+      );
+
+
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.maestro.password="";
+      this.maestro.confirmar_password="";
+    }
   }
 
   public actualizar(){

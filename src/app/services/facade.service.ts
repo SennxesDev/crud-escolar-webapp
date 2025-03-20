@@ -11,12 +11,13 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const session_cookie_name = 'sistema-buap-token';
-const user_email_cookie_name = 'sistema-buap-email';
-const user_id_cookie_name = 'sistema-buap-user_id';
-const user_complete_name_cookie_name = 'sistema-buap-user_complete_name';
-const group_name_cookie_name = 'sistema-buap-group_name';
-const codigo_cookie_name = 'sistema-buap-codigo';
+//Estas son variables para las cookies
+const session_cookie_name = 'crud-escolar-token';
+const user_email_cookie_name = 'crud-escolar-email';
+const user_id_cookie_name = 'crud-escolar-user_id';
+const user_complete_name_cookie_name = 'crud-escolar-user_complete_name';
+const group_name_cookie_name = 'crud-escolar-group_name';
+const codigo_cookie_name = 'crud-escolar-codigo';
 
 @Injectable({
   providedIn: 'root'

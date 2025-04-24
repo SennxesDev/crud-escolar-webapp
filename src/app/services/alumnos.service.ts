@@ -132,10 +132,10 @@ export class AlumnosService {
       return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, { headers: headers });
     }
   
-    // Obtener un solo alumno por ID
-    public getAlumnoByID(idAlumno: number): Observable<any> {
-      return this.http.get<any>(`${environment.url_api}/alumnos/?id=${idAlumno}`, httpOptions);
-    }
+     //Obtener un solo alumno dependiendo su ID
+    public getAlumnoByID(idUser: Number){
+      return this.http.get<any>(`${environment.url_api}/alumnos/?id=${idUser}`,httpOptions);
+  }
   
     // Actualizar un alumno
     public editarAlumno(data: any): Observable<any> {

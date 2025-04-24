@@ -10,6 +10,7 @@ import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-scre
 const routes: Routes = [
   { path: '', component:LoginScreenComponent, pathMatch: 'full'},
   { path: 'registro-usuario', component:RegistroUsuariosScreenComponent, pathMatch: 'full'},
+  { path: 'registro-usuarios/:rol/:id', component: RegistroUsuariosScreenComponent, pathMatch: 'full' },
   { path: 'home', component:HomeScreenComponent, pathMatch: 'full'},
   { path: 'alumnos', component: AlumnosScreenComponent, pathMatch: 'full' },
   { path: 'maestros', component: MaestrosScreenComponent, pathMatch: 'full' },

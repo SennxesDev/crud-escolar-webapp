@@ -38,7 +38,7 @@ export class AdminScreenComponent implements OnInit{
   }
 
   public goEditar(idUser: number){
-
+    this.router.navigate(["registro-usuarios/administrador/"+idUser]);
   }
 
   public delete(idUser: number){

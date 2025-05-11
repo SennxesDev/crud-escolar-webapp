@@ -101,9 +101,8 @@ export class AlumnosScreenComponent implements OnInit{
   }
 
   // Editar alumno
-  public goEditar(idAlumno: number) {
-    console.log("Editar alumno con ID:", idAlumno);
-    // Implement navigation to edit page
+  public goEditar(idUser: number) {
+    this.router.navigate(["registro-usuarios/alumno/"+idUser]);
   }
 
   // Eliminar alumno

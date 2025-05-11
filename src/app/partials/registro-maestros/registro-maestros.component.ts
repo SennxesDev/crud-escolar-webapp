@@ -25,6 +25,8 @@ export class RegistroMaestrosComponent implements OnInit{
   public errors:any = {};
   public editar:boolean = false;
   public token: string = "";
+  
+  public idUser: Number = 0;
 
   //Para el select
   public areas: any[] = [
@@ -58,9 +60,21 @@ export class RegistroMaestrosComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.maestro = this.maestrosService.esquemaMaestro();
-    this.maestro.rol = this.rol;
-    console.log("Los datos del admin son: ", this.maestro);
+      //El primer if valida si existe un parámetro en la URL
+      if(this.activatedRoute.snapshot.params['id'] != undefined){
+        this.editar = true;
+        //Asignamos a nuestra variable global el valor del ID que viene por la URL
+        this.idUser = this.activatedRoute.snapshot.params['id'];
+        console.log("ID User: ", this.idUser);
+        //Al iniciar la vista asignamos los datos del user
+        this.maestro = this.datos_user;
+      }else{
+        this.maestro = this.maestrosService.esquemaMaestro();
+        this.maestro.rol = this.rol;
+        this.token = this.facadeService.getSessionToken();
+      }
+      //Imprimir datos en consola
+      console.log("Maestro: ", this.maestro);
   }
 
   public regresar(){
@@ -68,6 +82,7 @@ export class RegistroMaestrosComponent implements OnInit{
   }
 
   public registrar(){
+    this.maestro.materias_json = this.maestro.materias_json.map((m: any) => m.value ? m.value : m);
     //Validación del formulario
     this.errors = [];
 
@@ -104,7 +119,26 @@ export class RegistroMaestrosComponent implements OnInit{
   }
 
   public actualizar(){
+    this.maestro.materias_json = this.maestro.materias_json.map((m: any) => m.value ? m.value : m);    
+    //Validación
+        this.errors = [];
 
+        this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+        if(!$.isEmptyObject(this.errors)){
+          return false;
+        }
+        console.log("Pasó la validación");
+    
+        this.maestrosService.editarMaestro(this.maestro).subscribe(
+          (response)=>{
+            alert("Maestro editado correctamente");
+            console.log("Maestro editado: ", response);
+            //Si se editó, entonces mandar al home
+            this.router.navigate(["home"]);
+          }, (error)=>{
+            alert("No se pudo editar el maestro");
+          }
+        );
   }
 
   //Funciones para password

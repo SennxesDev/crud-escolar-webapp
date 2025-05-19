@@ -7,6 +7,7 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
 import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
 
 const routes: Routes = [
   { path: '', component:LoginScreenComponent, pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'alumnos', component: AlumnosScreenComponent, pathMatch: 'full' },
   { path: 'maestros', component: MaestrosScreenComponent, pathMatch: 'full' },
   { path: 'administrador', component: AdminScreenComponent, pathMatch: 'full' },
-   { path: 'graficas', component: GraficasScreenComponent, pathMatch: 'full' },
+  { path: 'graficas', component: GraficasScreenComponent, pathMatch: 'full' },
+  { path: 'eventos', component: EventosScreenComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

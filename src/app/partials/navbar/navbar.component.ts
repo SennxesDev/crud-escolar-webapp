@@ -64,6 +64,7 @@ export class NavbarComponent implements OnInit{
       $("#principal").removeClass("active");
       $("#maestro").removeClass("active");
       $("#alumno").addClass("active");
+      $("#eventosDropdown").removeClass("active");
     }else if(link == "maestros"){
       $("#principal").removeClass("active");
       $("#alumno").removeClass("active");
@@ -77,6 +78,8 @@ export class NavbarComponent implements OnInit{
       $("#maestro").removeClass("active");
       $("#principal").removeClass("active");
       $("#graficas").addClass("active");
+    }else if(link == "eventos" || link == "registro-eventos"){
+    $("#eventosDropdown").addClass("active");
     }
   }
 }

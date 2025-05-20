@@ -1,0 +1,141 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="header-home">
+      <span class="title-perfil">Registro de Evento Académico</span>
+    </div>
+
+    <div class="body-alumnos">
+      <form [formGroup]="formEvento" (ngSubmit)="registrarEvento()">
+
+        <!-- Nombre del evento -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre del evento</mat-label>
+          <input matInput formControlName="name" placeholder="Ej. Congreso de Innovación Educativa">
+          <mat-error *ngIf="formEvento.get('name')?.invalid && formEvento.get('name')?.touched">
+            Ingrese un nombre válido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Tipo de evento -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de evento</mat-label>
+          <mat-select formControlName="tipo_evento">
+            <mat-option *ngFor="let tipo of tiposEvento" [value]="tipo">{{ tipo }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formEvento.get('tipo_evento')?.invalid && formEvento.get('tipo_evento')?.touched">
+            Seleccione un tipo de evento
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Fecha de realización -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fecha de realización</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha_realizacion" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="formEvento.get('fecha_realizacion')?.invalid && formEvento.get('fecha_realizacion')?.touched">
+            Seleccione una fecha válida
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Horas -->
+        <div class="time-fields">
+          <!-- Hora de inicio -->
+          <mat-form-field appearance="outline">
+            <mat-label>Hora de inicio</mat-label>
+            <input matInput formControlName="hora_inicio" placeholder="HH:MM AM/PM">
+            <mat-error *ngIf="formEvento.get('hora_inicio')?.invalid && formEvento.get('hora_inicio')?.touched">
+              Formato: HH:MM AM/PM
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Hora de finalización -->
+          <mat-form-field appearance="outline">
+            <mat-label>Hora de finalización</mat-label>
+            <input matInput formControlName="hora_fin" placeholder="HH:MM AM/PM">
+            <mat-error *ngIf="formEvento.get('hora_fin')?.invalid && formEvento.get('hora_fin')?.touched">
+              Formato: HH:MM AM/PM
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Lugar -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lugar</mat-label>
+          <input matInput formControlName="lugar">
+          <mat-error *ngIf="formEvento.get('lugar')?.invalid && formEvento.get('lugar')?.touched">
+            Ingrese un lugar válido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Público objetivo -->
+        <label class="mt-3">Público Objetivo</label><br>
+        <mat-checkbox *ngFor="let publico of publicosObjetivo" 
+                     [value]="publico" 
+                     (change)="onPublicoObjetivoChange($event, publico)">
+          {{ publico }}
+        </mat-checkbox>
+        <mat-error *ngIf="publicoObjetivoInvalid">
+          Seleccione al menos un público objetivo
+        </mat-error>
+
+        <!-- Programa educativo (condicional) -->
+        <mat-form-field *ngIf="mostrarProgramaEducativo" appearance="outline" class="full-width">
+          <mat-label>Programa educativo</mat-label>
+          <mat-select formControlName="programa_educativo">
+            <mat-option *ngFor="let programa of programasEducativos" [value]="programa">
+              {{ programa }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formEvento.get('programa_educativo')?.invalid && formEvento.get('programa_educativo')?.touched">
+            Seleccione un programa educativo
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Responsable -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Responsable</mat-label>
+          <mat-select formControlName="responsable">
+            <mat-option *ngFor="let responsable of responsables" [value]="responsable.id">
+              {{ responsable.nombre || (responsable.user?.first_name + ' ' + responsable.user?.last_name) }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formEvento.get('responsable')?.invalid && formEvento.get('responsable')?.touched">
+            Seleccione un responsable
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Descripción -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="descripcion" rows="4" maxlength="300"></textarea>
+          <mat-hint align="end">{{ formEvento.get('descripcion')?.value?.length || 0 }}/300</mat-hint>
+          <mat-error *ngIf="formEvento.get('descripcion')?.invalid && formEvento.get('descripcion')?.touched">
+            Máximo 300 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Cupo máximo -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cupo máximo</mat-label>
+          <input matInput type="number" formControlName="cupo_maximo" min="1">
+          <mat-error *ngIf="formEvento.get('cupo_maximo')?.invalid && formEvento.get('cupo_maximo')?.touched">
+            Ingrese un número válido (mínimo 1)
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Botones -->
+        <div class="section-buttons">
+          <button mat-raised-button color="primary" type="submit" 
+                  [disabled]="formEvento.invalid || publicoObjetivoInvalid">
+            Registrar Evento
+          </button>
+          <button mat-raised-button color="warn" type="button" 
+                  (click)="router.navigate(['home'])">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

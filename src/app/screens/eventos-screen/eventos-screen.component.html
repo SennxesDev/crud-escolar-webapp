@@ -1,1 +1,111 @@
-<p>eventos-screen works!</p>
+<div class="wrapper">
+  <div class="container">
+
+    <!-- Encabezado -->
+    <div class="header-home">
+      <span class="title-perfil">Lista de Eventos Académicos</span>
+
+      <!-- Botón para registrar evento -->
+      <button mat-raised-button color="primary" class="btn-primary" style="margin-left: auto;"
+              *ngIf="rol == 'administrador'" (click)="goRegistroEvento()">
+        Registrar Evento
+      </button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="body-alumnos mt-3">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Título -->
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef> Título </th>
+          <td mat-cell *matCellDef="let e"> {{ e.titulo }} </td>
+        </ng-container>
+
+        <!-- Tipo -->
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef> Tipo </th>
+          <td mat-cell *matCellDef="let e"> {{ e.tipo }} </td>
+        </ng-container>
+
+        <!-- Fecha -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef> Fecha </th>
+          <td mat-cell *matCellDef="let e"> {{ e.fecha | date:'dd/MM/yyyy' }} </td>
+        </ng-container>
+
+        <!-- Hora Inicio -->
+        <ng-container matColumnDef="hora_inicio">
+          <th mat-header-cell *matHeaderCellDef> Hora Inicio </th>
+          <td mat-cell *matCellDef="let e"> {{ e.hora_inicio }} </td>
+        </ng-container>
+
+        <!-- Hora Fin -->
+        <ng-container matColumnDef="hora_fin">
+          <th mat-header-cell *matHeaderCellDef> Hora Fin </th>
+          <td mat-cell *matCellDef="let e"> {{ e.hora_fin }} </td>
+        </ng-container>
+
+        <!-- Lugar -->
+        <ng-container matColumnDef="lugar">
+          <th mat-header-cell *matHeaderCellDef> Lugar </th>
+          <td mat-cell *matCellDef="let e"> {{ e.lugar }} </td>
+        </ng-container>
+
+        <!-- Público Objetivo -->
+        <ng-container matColumnDef="publico_objetivo">
+          <th mat-header-cell *matHeaderCellDef> Público </th>
+          <td mat-cell *matCellDef="let e"> {{ e.publico_objetivo.join(', ') }} </td>
+        </ng-container>
+
+        <!-- Programa Educativo -->
+        <ng-container matColumnDef="programa_educativo">
+          <th mat-header-cell *matHeaderCellDef> Programa </th>
+          <td mat-cell *matCellDef="let e"> {{ e.programa_educativo || '-' }} </td>
+        </ng-container>
+
+        <!-- Responsable -->
+        <ng-container matColumnDef="ponente">
+          <th mat-header-cell *matHeaderCellDef> Responsable </th>
+          <td mat-cell *matCellDef="let e"> {{ e.ponente }} </td>
+        </ng-container>
+
+        <!-- Descripción -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let e"> {{ e.descripcion }} </td>
+        </ng-container>
+
+        <!-- Cupo máximo -->
+        <ng-container matColumnDef="cupo_maximo">
+          <th mat-header-cell *matHeaderCellDef> Cupo </th>
+          <td mat-cell *matCellDef="let e"> {{ e.cupo_maximo }} </td>
+        </ng-container>
+
+        <!-- Editar -->
+        <ng-container *ngIf="puedeEditarEliminar()" matColumnDef="editar">
+          <th mat-header-cell *matHeaderCellDef> Editar </th>
+          <td mat-cell *matCellDef="let e" class="td-editar" (click)="goEditar(e.id)">
+            <mat-icon>edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Eliminar -->
+        <ng-container *ngIf="puedeEditarEliminar()" matColumnDef="eliminar">
+          <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+          <td mat-cell *matCellDef="let e" class="td-eliminar" (click)="eliminarEvento(e.id)">
+            <mat-icon>delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- Header y fila -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Paginador -->
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </div>
+</div>

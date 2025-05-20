@@ -1,132 +1,127 @@
 .wrapper {
   width: 100vw;
   height: 90vh;
+  padding: 1rem 0;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .header-home {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.title-perfil {
+  font-size: 2.5rem;
+  font-family: 'Nexa-Bold', sans-serif;
+  color: #231F20;
+  text-transform: capitalize;
+  margin: 0;
 }
 
 .body-alumnos {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-start;
+  padding-left: 3rem;
   width: 100%;
-}
-
-.container {
-  max-width: 90vw;
-}
-
-.title-perfil {
-  margin-left: 3rem;
-  font-size: 32px;
-  text-align: left;
-  font-family: Nexa-Bold;
-  letter-spacing: 0px;
-  color: #231F20;
-  text-transform: capitalize;
-  opacity: 1;
 }
 
 .title-table {
-  margin-left: 3rem;
-  font-size: 28px;
-  text-align: left;
-  font-family: Nexa-Bold;
-  letter-spacing: 0px;
+  font-size: 2rem;
+  font-family: 'Nexa-Bold', sans-serif;
   color: #231F20;
+  margin-bottom: 1rem;
   text-transform: capitalize;
-  opacity: 1;
 }
 
-// Estilos de la tabla
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  background-color: white;
+  padding: 1rem;
+}
+
 table {
   width: 100%;
-  padding-bottom: 1.5rem;
+  border-collapse: separate;
+  border-spacing: 0 8px;
 }
 
-// Asegura que la tabla tenga un layout fijo y mejor ajuste
 ::ng-deep .mat-mdc-table {
-  table-layout: fixed !important;
+  table-layout: auto !important;
 }
 
-// Cabecera de la tabla
 .mat-mdc-header-cell {
-  border-bottom-color: #231F20;
-  font-family: Nexa-Bold !important;
-  font-size: 16px; /* Reducir tamaño de fuente para cabecera */
-  text-align: left;
-  letter-spacing: 0px;
+  font-family: 'Nexa-Bold', sans-serif !important;
+  font-size: 1rem;
   color: #231F20;
-  opacity: 1;
-  padding: 10px; /* Añadir espacio para mayor legibilidad */
-}
-
-// Celdas de la tabla
-.mat-mdc-cell {
+  padding: 12px 10px;
+  border-bottom: 2px solid #231F20;
   text-align: left;
-  font-family: Nexa !important;
-  font-size: 14px !important; /* Reducir tamaño de fuente */
-  letter-spacing: 0px !important;
+}
+
+.mat-mdc-cell {
+  font-family: 'Nexa', sans-serif !important;
+  font-size: 0.9rem !important;
   color: #231F20 !important;
-  opacity: 1 !important;
-  padding: 8px; /* Espaciado adecuado en las celdas */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 10px;
   white-space: nowrap;
-}
-
-// Columnas con texto largo que puede desbordarse
-.mat-column-matricula,
-.mat-column-nombre,
-.mat-column-email,
-.mat-column-fecha_nacimiento,
-.mat-column-curp,
-.mat-column-rfc,
-.mat-column-edad,
-.mat-column-telefono,
-.mat-column-ocupacion {
-  max-width: 150px; /* Limitar el ancho máximo de cada columna */
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
-// Editar
-.td-editar {
-  color: #0092B8 !important;
-  cursor: pointer !important;
-  font-size: 20px !important;
+.td-editar, .td-eliminar {
   text-align: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.td-editar {
+  color: #0092B8;
 }
 
 .td-editar:hover {
-  color: #006179 !important;
-  font-size: 25px !important;
-  text-align: center;
+  color: #006179;
+  transform: scale(1.2);
 }
 
-// Eliminar
 .td-eliminar {
-  color: #E84150 !important;
-  cursor: pointer !important;
-  font-size: 20px !important;
-  text-align: center;
+  color: #E84150;
 }
 
 .td-eliminar:hover {
-  color: #ce1626 !important;
-  font-size: 25px !important;
-  text-align: center;
+  color: #ce1626;
+  transform: scale(1.2);
 }
 
-// Paginador de la tabla
 .mat-paginator {
-  font-size: 0.8rem; /* Reducir el tamaño del paginador */
-  margin-top: 10px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .header-home,
+  .body-alumnos {
+    padding-left: 1rem;
+  }
+
+  .title-perfil {
+    font-size: 1.8rem;
+  }
+
+  .title-table {
+    font-size: 1.5rem;
+  }
 }

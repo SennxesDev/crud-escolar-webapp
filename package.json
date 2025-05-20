@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^16.0.1",
     "@angular/animations": "^16.2.0",
     "@angular/cdk": "^16.2.14",
     "@angular/common": "^16.2.0",
@@ -28,6 +29,7 @@
     "ng2-charts": "^4.1.1",
     "ngx-cookie-service": "^16.0.0",
     "ngx-mask": "^16.4.2",
+    "ngx-mat-timepicker": "^16.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

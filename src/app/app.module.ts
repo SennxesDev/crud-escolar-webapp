@@ -39,8 +39,11 @@ import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
-import { RegistroEventosComponent } from './partials/registro-eventos/registro-eventos.component';
 import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegistroEventosScreenComponent } from './screens/registro-eventos-screen/registro-eventos-screen.component';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -57,8 +60,8 @@ import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.
     MaestrosScreenComponent,
     EliminarUserModalComponent,
     GraficasScreenComponent,
-    RegistroEventosComponent,
     EventosScreenComponent,
+    RegistroEventosScreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +83,10 @@ import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.
     MatPaginatorModule,
     MatDialogModule,
     NgChartsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatTimepickerModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},

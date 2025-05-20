@@ -18,9 +18,21 @@
             <li class="nav-item" *ngIf="rol!='maestro' && rol!='alumno'">
               <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" id="eventos" (click)="clickNavLink('eventos')">Eventos Academicos</a>
+           <!-- MODULO EVENTOS -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="eventosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Eventos Académicos
+              </a>
+                <ul class="dropdown-menu" aria-labelledby="eventosDropdown">
+            <li *ngIf="rol === 'administrador'">
+              <a class="dropdown-item" (click)="clickNavLink('registro-eventos')">Registrar Eventos</a>
             </li>
+            <li>
+              <a class="dropdown-item" (click)="clickNavLink('eventos')">Ver Eventos</a>
+            </li>
+          </ul>
+        </li>
+
             <li class="nav-item">
               <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>
             </li>

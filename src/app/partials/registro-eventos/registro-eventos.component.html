@@ -1,0 +1,138 @@
+<div class="wrapper">
+  <div class="section-registro">
+    <div class="header-registro">
+      <app-navbar [tipo]="tipo"></app-navbar>
+    </div>
+    <div class="body-registro">
+      <section class="slider">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="/assets/images/carousel_1.jpeg" class="d-block img-slider">
+            </div>
+            <div class="carousel-item">
+              <img src="assets/images/carousel_2.jpeg" class="d-block img-slider">
+            </div>
+            <div class="carousel-item">
+              <img src="assets/images/carousel_3.jpeg" class="d-block img-slider">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
+        <div class="row mt-3 mb-3 body-form">
+          <div class="col-12">
+            <label class="title-user">Ingresa los datos del evento</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Nombre del evento</mat-label>
+            <input matInput [(ngModel)]="evento.name" [disabled]="editar ? true : false" name="name" placeholder="Escribe el nombre del evento">
+          </mat-form-field>
+          <div *ngIf="errors.name" class="invalid-feedback">{{ errors.name }}</div>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Tipo de evento</mat-label>
+            <mat-select [(ngModel)]="evento.tipo_evento" [disabled]="editar ? true : false">
+              <mat-option *ngFor="let tipo of tipos" [value]="tipo.viewValue">
+                {{tipo.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="errors.tipo_evento" class="invalid-feedback">{{ errors.tipo_evento }}</div>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Fecha de realización</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="evento.fecha_realizacion" placeholder="Agregar fecha" (focus)="picker.open()" (dateChange)="changeFecha($event)" type="string">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div *ngIf="errors.fecha_realizacion" class="invalid-feedback">{{ errors.fecha_realizacion }}</div>
+
+          <mat-form-field appearance="outline">
+              <mat-label>Hora de inicio</mat-label>
+              <input matInput [ngxTimepicker]="timeInicio" placeholder="Selecciona hora inicio" readonly [(ngModel)]="evento.hora_inicio">
+              <ngx-material-timepicker #timeInicio (change)="evento.hora_inicio = $event"></ngx-material-timepicker>
+              <mat-icon matSuffix (click)="timeInicio.open()">access_time</mat-icon>
+          </mat-form-field>
+          <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
+
+          <mat-form-field appearance="outline">
+              <mat-label>Hora de fin</mat-label>
+              <input matInput [ngxTimepicker]="timeFin" placeholder="Selecciona hora fin" readonly [(ngModel)]="evento.hora_fin">
+              <ngx-material-timepicker #timeFin (change)="evento.hora_fin = $event"></ngx-material-timepicker>
+              <mat-icon matSuffix (click)="timeFin.open()">access_time</mat-icon>
+          </mat-form-field>
+          <div *ngIf="errors.hora_fin" class="invalid-feedback">{{ errors.hora_fin }}</div>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Lugar</mat-label>
+            <input matInput [(ngModel)]="evento.lugar" name="lugar"  placeholder="Escribe en donde toma lugar el evento" (keypress)="letrasyNumeros($event)">
+          </mat-form-field>
+          <div *ngIf="errors.lugar" class="invalid-feedback">{{ errors.lugar }}</div>
+
+           <div class="select-publico">
+            <mat-label class="title-publico">Selecciona el público objetivo</mat-label>
+              <div class="checkbox-group" *ngFor="let persona of publico; let i = index" >
+                <mat-checkbox class="checkbox-item opc-sc" name="opsc" (change)="checkboxChange($event)" value="{{persona.personas}}" [checked]="revisarSeleccion(persona.personas)">
+                    <div class="d-checkbox-nombre">{{persona.personas}}</div>
+                </mat-checkbox>
+              </div>
+              <div *ngIf="errors.publico_json" class="invalid-feedback">{{ errors.publico_json }}</div>
+            </div>
+
+          <mat-form-field  class="mat-input" appearance="outline" *ngIf="estudiantesSeleccionados">
+            <mat-label>Programa educativo</mat-label>
+            <mat-select [(ngModel)]="evento.programa_educativo" [disabled]="estudiantesSeleccionados?false:true" name="programa_educativo">
+              <mat-option *ngFor="let programa of programas" [value]="programa.viewValue">
+                {{programa.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="errors.programa_educativo && estudiantesSeleccionados" class="invalid-feedback">{{ errors.programa_educativo }}</div>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Responsable del evento</mat-label>
+            <mat-select [(ngModel)]="evento.responsable" name="responsable" [disabled]="editar ? true : false">
+            <mat-option *ngFor="let responsable of lista_responsables" [value]="responsable.id">
+            {{ responsable.nombre_completo }}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="errors.responsable" class="invalid-feedback">{{ errors.responsable }}</div>
+
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Descripción breve</mat-label>
+            <input matInput [(ngModel)]="evento.descripcion" name="descripcion" placeholder="Escribe una breve descripción del evento" (keypress)="parrafo($event)">
+          </mat-form-field>
+          <div *ngIf="errors.descripcion" class="invalid-feedback">{{ errors.descripcion }}</div>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Cupo máximo de asistentes</mat-label>
+            <input matInput [(ngModel)]="evento.cupo_maximo" mask="000" name="cupo_maximo" placeholder="Escribe el cupo máximo del evento">
+          </mat-form-field>
+          <div *ngIf="errors.cupo_maximo" class="invalid-feedback">{{ errors.cupo_maximo }}</div>
+
+          <div class="section-buttons">
+            <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
+            <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrar()">Registrar</button>
+            <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

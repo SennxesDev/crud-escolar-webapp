@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit{
 
   public token : string = "";
   public editar:boolean = false;
+  public evento:boolean = true;
 
   constructor(
     private facadeService: FacadeService,
@@ -22,14 +23,14 @@ export class NavbarComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.rol = this.facadeService.getUserGroup();
+    this.rol=this.facadeService.getUserGroup();
     console.log("Rol user: ", this.rol);
     //Validar que haya inicio de sesión
     //Obtengo el token del login
-    this.token = this.facadeService.getSessionToken();
+    this.token=this.facadeService.getSessionToken();
     //El primer if valida si existe un parámetro en la URL
-    if(this.activatedRoute.snapshot.params['id'] != undefined){
-      this.editar = true;
+    if(this.activatedRoute.snapshot.params['id']!=undefined){
+      this.editar=true;
     }
   }
 
@@ -37,14 +38,19 @@ export class NavbarComponent implements OnInit{
     this.router.navigate(["registro-usuarios"]);
   }
 
-  //Cerrar sesión
+  public goEventos(){
+    this.router.navigate(["registro-eventos"]);
+    this.evento=false;
+  }
+
+  //Cerrar Sesión
   public logout(){
     this.facadeService.logout().subscribe(
       (response)=>{
         console.log("Entró");
 
         this.facadeService.destroyUser();
-        //Navega al login
+        //Navega al user
         this.router.navigate(["/"]);
       }, (error)=>{
         console.error(error);
@@ -60,26 +66,28 @@ export class NavbarComponent implements OnInit{
   }
 
   public activarLink(link: string){
-    if(link == "alumnos"){
+    if(link=="alumnos"){
       $("#principal").removeClass("active");
       $("#maestro").removeClass("active");
-      $("#alumno").addClass("active");
-      $("#eventosDropdown").removeClass("active");
-    }else if(link == "maestros"){
+      $("#alumno").addClass("active")
+    }else if(link=="maestros"){
       $("#principal").removeClass("active");
-      $("#alumno").removeClass("active");
+      $("#alumno").removeClass("active")
       $("#maestro").addClass("active");
-    }else if(link == "home"){
-      $("#alumno").removeClass("active");
+    }else if(link=="home"){
+      $("#alumno").removeClass("active")
       $("#maestro").removeClass("active");
       $("#principal").addClass("active");
-    }else if(link == "graficas"){
-      $("#alumno").removeClass("active");
+    }else if(link=="graficas"){
+      $("#alumno").removeClass("active")
       $("#maestro").removeClass("active");
       $("#principal").removeClass("active");
       $("#graficas").addClass("active");
-    }else if(link == "eventos" || link == "registro-eventos"){
-    $("#eventosDropdown").addClass("active");
+    }else if(link=="eventos"){
+      $("#alumno").removeClass("active")
+      $("#maestro").removeClass("active");
+      $("#principal").removeClass("active");
+      $("#eventos").addClass("active");
     }
   }
 }

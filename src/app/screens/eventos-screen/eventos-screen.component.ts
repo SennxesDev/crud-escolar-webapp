@@ -55,7 +55,7 @@ export class EventosScreenComponent implements OnInit {
   }
 
   cargarEventos(): void {
-    this.eventosService.obtenerEventos().subscribe(
+    this.eventosService.obtenerListaEventos().subscribe(
       res => {
         this.eventos = res.filter(evento => {
           const publico = evento.publico_objetivo || [];

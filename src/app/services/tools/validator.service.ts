@@ -77,4 +77,45 @@ export class ValidatorService {
     return pat.test(input);
   }
 
+  atLeastOneCheckboxSelected(checkboxes: any[]): boolean {
+    return checkboxes && checkboxes.length > 0;
+  }
+
+  validarHoras(horaInicio: string, horaFin: string): boolean {
+    if (!horaInicio || !horaFin) return false;
+
+    // Convertir de 12h a formato 24h y luego a Date
+    const convertirAHoras24 = (hora: string): Date => {
+      let [time, modifier] = hora.split(' ');
+      let [hours, minutes] = time.split(':');
+
+      let hh = parseInt(hours, 10);
+      let mm = parseInt(minutes, 10);
+
+      if (modifier === 'PM' && hh < 12) hh += 12;
+      if (modifier === 'AM' && hh === 12) hh = 0;
+
+      const fecha = new Date();
+      fecha.setHours(hh, mm, 0, 0); // Limpiamos segundos y milisegundos
+
+      return fecha;
+    };
+
+    const inicio = convertirAHoras24(horaInicio);
+    const fin = convertirAHoras24(horaFin);
+
+    return fin > inicio;
+  }
+
+  fechaActualoFutura(dateStr: string): boolean {
+    const inputDate = new Date(dateStr);
+    const today = new Date();
+
+    // Normaliza las fechas eliminando la hora
+    inputDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return inputDate >= today;
+  }
+
 }

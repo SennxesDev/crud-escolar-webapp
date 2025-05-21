@@ -7,50 +7,41 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <ng-container *ngIf="tipo!='registro-usuarios'; else registraUsers">
-            
-            <!-- OPCIONES DEL MENU -->
-            <li class="nav-item">
-              <a class="nav-link active" id="principal" aria-current="page" (click)="clickNavLink('home')">Inicio</a>
-            </li>
-            <li class="nav-item" *ngIf="rol!='alumno'">
-              <a class="nav-link" id="alumno" aria-current="page" (click)="clickNavLink('alumnos')">Alumnos</a>
-            </li>
-            <li class="nav-item" *ngIf="rol!='maestro' && rol!='alumno'">
-              <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
-            </li>
-           <!-- MODULO EVENTOS -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="eventosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Eventos Académicos
-              </a>
-                <ul class="dropdown-menu" aria-labelledby="eventosDropdown">
-            <li *ngIf="rol === 'administrador'">
-              <a class="dropdown-item" (click)="clickNavLink('registro-eventos')">Registrar Eventos</a>
-            </li>
-            <li>
-              <a class="dropdown-item" (click)="clickNavLink('eventos')">Ver Eventos</a>
-            </li>
-          </ul>
-        </li>
-
-            <li class="nav-item">
-              <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Registrar
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='alumno'">Alumnos</a></li>
-                <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='maestro' && rol!='alumno'">Maestros</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Materias</a></li>
-              </ul>
-            </li>
+            <ng-container *ngIf="tipo!='registro-eventos'; else registraEvento">
+              <li class="nav-item">
+                <a class="nav-link active" id="principal" aria-current="page" (click)="clickNavLink('home')">Inicio</a>
+              </li>
+              <li class="nav-item" *ngIf="rol!='alumno'">
+                <a class="nav-link" id="alumno" aria-current="page" (click)="clickNavLink('alumnos')">Alumnos</a>
+              </li>
+              <li class="nav-item" *ngIf="rol!='maestro' && rol!='alumno'">
+                <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="evento" (click)="clickNavLink('eventos')">Eventos Académicos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Registrar
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='alumno'">Alumnos</a></li>
+                  <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='maestro' && rol!='alumno'">Maestros</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" (click)="goEventos()" *ngIf="rol!='maestro' && rol!='alumno'">Eventos Académicos</a></li>
+                </ul>
+              </li>
+            </ng-container>
           </ng-container>
           <ng-template #registraUsers>
             <label class="navbar-brand" *ngIf="!editar">Registro de usuarios del sistema</label>
             <label class="navbar-brand" *ngIf="editar">Editar usuario del sistema</label>
+          </ng-template>
+          <ng-template #registraEvento>
+            <label class="navbar-brand" *ngIf="evento">Registro de eventos académicos</label>
           </ng-template>
         </ul>
         <form class="d-flex">

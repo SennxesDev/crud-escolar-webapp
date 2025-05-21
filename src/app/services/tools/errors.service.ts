@@ -10,6 +10,7 @@ export class ErrorsService {
   public numeric: string;
   public betweenDate: string;
   public email: string;
+  public area_investigacion: string;
 
   constructor() {
     this.generic = 'Favor de verificar el tipo de dato introducido no es válido';
@@ -17,6 +18,7 @@ export class ErrorsService {
     this.numeric = 'Solo se aceptan valores numéricos';
     this.betweenDate = 'Fecha no es válida';
     this.email = 'Favor de introducir un correo con el formato correcto';
+    this.area_investigacion = 'Por favor selecciona un area';
   }
 
   between(min: any, max: any) {

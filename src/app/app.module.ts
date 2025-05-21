@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
+
 //Este import es para los servicios HTTP
 import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//Angular material 
+//Angular material
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -22,10 +23,13 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { MatDialogModule } from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 //Para usar el mask
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-//Cambia el formato a Español
+//Cambia el idioma a español
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { RegistroUsuariosScreenComponent } from './screens/registro-usuarios-screen/registro-usuarios-screen.component';
@@ -39,11 +43,10 @@ import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { NgChartsModule } from 'ng2-charts';
 import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RegistroEventosScreenComponent } from './screens/registro-eventos-screen/registro-eventos-screen.component';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { RegistroEventosComponent } from './partials/registro-eventos/registro-eventos.component';
+import { EliminarEventoComponent } from './modals/eliminar-evento/eliminar-evento.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     EliminarUserModalComponent,
     GraficasScreenComponent,
     EventosScreenComponent,
-    RegistroEventosScreenComponent,
+    RegistroEventosComponent,
+    EliminarEventoComponent
   ],
   imports: [
     BrowserModule,
@@ -83,13 +87,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatPaginatorModule,
     MatDialogModule,
     NgChartsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    NgxMatTimepickerModule
+    NgxMaterialTimepickerModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
     provideNgxMask()
   ],
   bootstrap: [AppComponent]

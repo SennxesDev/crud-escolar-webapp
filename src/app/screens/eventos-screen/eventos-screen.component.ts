@@ -75,7 +75,7 @@ export class EventosScreenComponent implements OnInit{
   public obtenerEventos(){
     this.eventosService.obtenerListaEventos().subscribe(
       (response)=>{
-        this.lista_eventos = response;
+        this.lista_eventos = response.results;
         console.log("Lista eventos: ", this.lista_eventos);
         if(this.lista_eventos.length > 0){
           console.log("Eventos: ", this.lista_eventos);

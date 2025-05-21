@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { MaestrosService } from 'src/app/services/maestros.service';
+import { MaestrosService } from '../../services/maestros.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 declare var $:any;
 
@@ -14,7 +14,6 @@ export class RegistroMaestrosComponent implements OnInit{
   @Input() rol: string = "";
   @Input() datos_user: any = {};
 
-  
   //Para contraseñas
   public hide_1: boolean = false;
   public hide_2: boolean = false;
@@ -25,7 +24,6 @@ export class RegistroMaestrosComponent implements OnInit{
   public errors:any = {};
   public editar:boolean = false;
   public token: string = "";
-  
   public idUser: Number = 0;
 
   //Para el select
@@ -52,29 +50,29 @@ export class RegistroMaestrosComponent implements OnInit{
 
 
   constructor(
-    private maestrosService: MaestrosService,
-    private router: Router,
     private location : Location,
     public activatedRoute: ActivatedRoute,
-    private facadeService: FacadeService
+    private maestrosService : MaestrosService,
+    private facadeService: FacadeService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
-      //El primer if valida si existe un parámetro en la URL
-      if(this.activatedRoute.snapshot.params['id'] != undefined){
-        this.editar = true;
-        //Asignamos a nuestra variable global el valor del ID que viene por la URL
-        this.idUser = this.activatedRoute.snapshot.params['id'];
-        console.log("ID User: ", this.idUser);
-        //Al iniciar la vista asignamos los datos del user
-        this.maestro = this.datos_user;
-      }else{
-        this.maestro = this.maestrosService.esquemaMaestro();
-        this.maestro.rol = this.rol;
-        this.token = this.facadeService.getSessionToken();
-      }
-      //Imprimir datos en consola
-      console.log("Maestro: ", this.maestro);
+    //El primer if valida si existe un parámetro en la URL
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista asignamos los datos del user
+      this.maestro = this.datos_user;
+    }else{
+      this.maestro = this.maestrosService.esquemaMaestro();
+      this.maestro.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
+    //Imprimir datos en consola
+    console.log("Maestro: ", this.maestro);
   }
 
   public regresar(){
@@ -82,7 +80,6 @@ export class RegistroMaestrosComponent implements OnInit{
   }
 
   public registrar(){
-    this.maestro.materias_json = this.maestro.materias_json.map((m: any) => m.value ? m.value : m);
     //Validación del formulario
     this.errors = [];
 
@@ -90,55 +87,52 @@ export class RegistroMaestrosComponent implements OnInit{
     if(!$.isEmptyObject(this.errors)){
       return false;
     }
-    //Validar la contraseña
+
+    // validar contrasenas
     if(this.maestro.password == this.maestro.confirmar_password){
-      
-      //Aquí se va a ejecutar la lógica de programación para registrar un usuario
+      //logica del programa para registrar usuario
       this.maestrosService.registrarMaestro(this.maestro).subscribe(
         (response)=>{
-          //Aquí va la ejecución del servicio si todo es correcto
+          //ejecucion del servicio si todo es correcto
           alert("Usuario registrado correctamente");
           console.log("Usuario registrado: ", response);
-          if(this.token != ""){
+          if(this.token !=""){
             this.router.navigate(["home"]);
           }else{
             this.router.navigate(["/"]);
           }
         }, (error)=>{
-          //Aquí se ejecuta el error
-          alert("No se pudo registrar usuario");
+          //ejecucion del error
+          alert("No se pudo registrar al usuario");
         }
       );
-
-
     }else{
-      alert("Las contraseñas no coinciden");
+      alert("Las contrasenas no coinciden");
       this.maestro.password="";
       this.maestro.confirmar_password="";
     }
   }
 
   public actualizar(){
-    this.maestro.materias_json = this.maestro.materias_json.map((m: any) => m.value ? m.value : m);    
     //Validación
-        this.errors = [];
+    this.errors = [];
 
-        this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
-        if(!$.isEmptyObject(this.errors)){
-          return false;
-        }
-        console.log("Pasó la validación");
-    
-        this.maestrosService.editarMaestro(this.maestro).subscribe(
-          (response)=>{
-            alert("Maestro editado correctamente");
-            console.log("Maestro editado: ", response);
-            //Si se editó, entonces mandar al home
-            this.router.navigate(["home"]);
-          }, (error)=>{
-            alert("No se pudo editar el maestro");
-          }
-        );
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.maestrosService.editarMaestro(this.maestro).subscribe(
+      (response)=>{
+        alert("Maestro editado correctamente");
+        console.log("Maestro editado: ", response);
+        //Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      }, (error)=>{
+        alert("No se pudo editar el maestro");
+      }
+    );
   }
 
   //Funciones para password

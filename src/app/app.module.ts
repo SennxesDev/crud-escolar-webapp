@@ -47,6 +47,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
 import { RegistroEventosComponent } from './partials/registro-eventos/registro-eventos.component';
 import { EliminarEventoComponent } from './modals/eliminar-evento/eliminar-evento.component';
+import { CommonModule } from '@angular/common'; // Para el pipe date
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { EliminarEventoComponent } from './modals/eliminar-evento/eliminar-event
     MatPaginatorModule,
     MatDialogModule,
     NgChartsModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    CommonModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},

@@ -236,7 +236,7 @@ public obtenerResponsables() {
     }
   );
 }
-    cargarEvento(id: number) {
+     cargarEvento(id: number) {
       this.eventosService.getEventoByID(id).subscribe(
         (response) => {
           this.evento = response;

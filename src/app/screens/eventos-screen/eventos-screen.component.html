@@ -1,0 +1,98 @@
+<div class="wrapper">
+    <div class="header-home-admin">
+      <app-navbar></app-navbar>
+    </div>
+    <div class="body-admin">
+      <div class="row mt-5 mb-5">
+        <div class="col-12">
+          <span class="title-perfil">Bienvenido {{name_user}}</span>
+          <br><br>
+          <span class="title-perfil">Administrador</span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row mt-3 mb-5" style="text-align: center;">
+          <div class="col-12">
+            <div class="alert alert-primary" role="alert">
+              <span class="title-table">Lista de eventos registrados</span>
+            </div>
+          </div>
+        </div>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="tipo">
+                  <th mat-header-cell *matHeaderCellDef> Tipo de evento </th>
+                  <td mat-cell *matCellDef="let element"> {{element.tipo_evento}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fecha">
+                  <th mat-header-cell *matHeaderCellDef> Fecha de realizacion </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fecha_realizacion | date: 'dd/MM/yyyy':'UTC'}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="horario">
+                <th mat-header-cell *matHeaderCellDef> Horario </th>
+                <td mat-cell *matCellDef="let element">{{ convertirHoraFormato24a12(element.hora_inicio) }} - {{ convertirHoraFormato24a12(element.hora_fin) }}</td>
+                </ng-container>
+
+              <ng-container matColumnDef="lugar">
+                <th mat-header-cell *matHeaderCellDef> Lugar </th>
+                <td mat-cell *matCellDef="let element"> {{element.lugar}} </td>
+                </ng-container>
+
+            <ng-container matColumnDef="publico">
+                <th mat-header-cell *matHeaderCellDef> Publico objetivo </th>
+                <td mat-cell *matCellDef="let element"> {{element.publico_json}} </td>
+                </ng-container>
+
+              <ng-container matColumnDef="programa">
+                  <th mat-header-cell *matHeaderCellDef> Programa educativo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.programa_educativo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="responsable">
+                  <th mat-header-cell *matHeaderCellDef> Responsable </th>
+                  <td mat-cell *matCellDef="let element"> {{element.responsable}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                  <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                  <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cupo">
+                  <th mat-header-cell *matHeaderCellDef> Cupo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cupo_maximo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="editar">
+                  <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                  <td mat-cell *matCellDef="let element" class="td-editar">
+                      <i class="bi bi-pencil-square" (click)="goEditar(element.id)"></i>
+                  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="eliminar">
+                  <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                  <td mat-cell *matCellDef="let element" class="td-eliminar">
+                      <i class="bi bi-trash3-fill" (click)="delete(element.id)"></i>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                         showFirstLastButtons
+                         aria-label="Select page of periodic elements">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
